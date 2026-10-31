@@ -1,6 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 class NILineChart extends HTMLElement {
+  static observedAttributes = ["ratio", "data"];
   _addStyles() {
     if (document.getElementById("ni-linechart-styles")) {
       return;
@@ -131,6 +132,9 @@ class NILineChart extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
     this._setAttributes({ [name]: newValue });
   }
 
@@ -163,6 +167,7 @@ class NILineChart extends HTMLElement {
   }
 
   _setAttributes(changes) {
+    console.log({ changes });
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
         this.setAttribute(key, changes[key]);
